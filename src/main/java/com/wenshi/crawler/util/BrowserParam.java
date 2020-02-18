@@ -21,6 +21,7 @@ public class BrowserParam {
      */
     public static ChromeOptions initChrome(){
         System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\src\\main\\exe\\chromedriver.exe");
+        System.out.println(System.getProperty("user.dir"));
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-infobars");
         //无头模式
