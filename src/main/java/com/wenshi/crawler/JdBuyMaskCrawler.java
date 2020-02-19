@@ -18,11 +18,11 @@ public class JdBuyMaskCrawler {
     private static String JD_URL = "https://passport.jd.com/new/login.aspx";
 
     private static String[] urlList={
-            "https://item.jd.com/65426813242.html",
+            /*"https://item.jd.com/65426813242.html",
             "https://item.jd.com/65504531652.html",
             "https://item.jd.com/65519834898.html",
             "https://item.jd.com/65519834897.html",
-            "https://item.jd.com/57221392023.html",
+            "https://item.jd.com/57221392023.html",*/
             "https://item.jd.com/65432253973.html"
     };
     /*
@@ -47,39 +47,22 @@ public class JdBuyMaskCrawler {
         }
         while(true){
             for(int i=0;i<urlList.length;i++){
-
                 driver.navigate().to(urlList[i]);
                 try {
                     WebElement webElement = driver.findElement(By.xpath("//*[@id=\"InitCartUrl\"]"));
                     if(webElement.getAttribute("class").contains("btn-disable")){
-                        System.out.println(new Date()+":"+urlList[i]+"类型口罩 无货");
+                        System.out.println(new Date()+":"+urlList[i]+"类型口罩无货");
                     }else{
                         webElement.click();
                     }
                 }catch (Exception e){
-//                System.out.println("暂时无货");
+                    System.out.println("暂时无货");
                 }
 
                 if(driver.getCurrentUrl().contains("addToCart.html")){
-
-
-                    // //*[@id="GotoShoppingCart"]  --去购物车
                     driver.findElement(By.xpath("//*[@id=\"GotoShoppingCart\"]")).click();
                     if(driver.getCurrentUrl().contains("cart.action")){//购物车结算
-                        //点击结算
-                        driver.findElement(By.xpath("//*[@id=\"cart-floatbar\"]/div/div/div/div[2]/div[4]/div[1]/div/div[1]/a")).click();
-
-
-                        ////*[@id="order-submit"]
-                        if(driver.getCurrentUrl().contains("getOrderInfo.action")){
-                            //
-                            driver.findElement(By.xpath("//*[@id=\"order-submit\"]")).click();
-                            if(driver.getCurrentUrl().contains("cashier")){
-                                System.out.println(new Date()+":"+urlList[i]+"有口罩啦");
-                                MailUtil.sendEmail("有口罩啦","抢到 "+urlList[i]);
-                            }
-                        }
-
+                        MailUtil.sendEmail("有口罩啦","抢到 "+urlList[i]);
                     }
                 }
                 try {
